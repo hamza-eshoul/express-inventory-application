@@ -1,0 +1,67 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    title Express-Inventory-Application
+    link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM' crossorigin='anonymous')
+  body.bg-tertiary-rgb
+    // Navbar
+    nav.navbar.dark.navbar-expand-lg.bg-dark.border-bottom.border-bottom-dark(data-bs-theme='dark')
+      .container-fluid
+        a.navbar-brand(href='/') Navbar
+        button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
+          span.navbar-toggler-icon
+        #navbarSupportedContent.collapse.navbar-collapse
+          ul.navbar-nav.me-auto.mb-2.mb-lg-0
+            li.nav-item
+              a.nav-link.active(aria-current='page' href='/') Home
+            li.nav-item
+              a.nav-link(href='/carModels/categories_list') All Categories
+            li.nav-item
+              a.nav-link(href='/carModels/items_list') All Items
+            li.nav-item
+              a.nav-link(href='/carModels/category/create') Create Category 
+            li.nav-item
+              a.nav-link(href='/carModels/item/create') Create Item
+              
+          form.d-flex(role='search')
+            input.form-control.me-2(type='search' placeholder='Search' aria-label='Search')
+            button.btn.btn-outline-success(type='submit')
+              | Search
+    // Heading
+    .container.my-4
+      h1.text-center.border.border-secondary.p-2.rounded
+        | #{title}
+    // Key Indicators section
+    // Create Category Form
+    form.w-50.m-auto(method='POST' action='')
+      .mb-3
+        label.form-label(for='itemName') Item Name
+        input#itemName.form-control(type='text' name='itemName')(placeholder="Name of the item")(value= items.name )
+      .mb-3
+        label.form-label(for='itemDescription') Item Description
+        input#itemDescription.form-control(type='text' name='itemDescription')(placeholder="Description of the item")(value= items.description)
+      .mb-3
+        label.form-label(for='itemPrice') Item Price
+        input#itemPrice.form-control(type='number' name='itemPrice')(placeholder="Price of the item")(value= items.price)
+      .mb-3
+        label.form-label(for='itemNbrStock') Item Number In Stock
+        input#itemNbrStock.form-control(type='number' name='itemNbrStock')(placeholder="Stock Number of the item")(value= items.nbrInStock)
+      .mb-3
+        | Item Category
+        select.form-select.my-2(name='itemCategory' aria-label='Default select example')
+            each category in categories 
+              if(items.category === category.name)
+                option(value=category.name)(selected='') #{category.name}
+              else 
+                option(value=category.name) #{category.name} 
+        
+      button.btn.btn-primary(type='submit') Submit
+
+    if errors 
+     ul.w-50.m-auto.m-3 
+      for error in errors 
+        li!= error.msg 
+        
+    script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js' integrity='sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz' crossorigin='anonymous')
